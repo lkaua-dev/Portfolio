@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portfólio — Kauã Lucas | Front-end & IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:       #090c10;
+    --surface:  #0d1117;
+    --border:   #1e2a38;
+    --accent:   #00e5c3;
+    --accent2:  #0070f3;
+    --text:     #e6edf3;
+    --muted:    #7d8fa3;
+    --mono:     'Space Mono', monospace;
+    --sans:     'Sora', sans-serif;
+    --radius:   12px;
+    --glow:     0 0 24px rgba(0,229,195,.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: .5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(9,12,16,.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: .85rem;
+    color: var(--accent);
+    letter-spacing: .05em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: .8rem;
+    font-family: var(--mono);
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 7rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* grid bg lines */
+  #hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,195,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,195,.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 30%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    position: relative; z-index: 1;
+    max-width: 860px; width: 100%;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-family: var(--mono); font-size: .75rem;
+    color: var(--accent); letter-spacing: .1em;
+    border: 1px solid rgba(0,229,195,.3);
+    padding: .35rem 1rem; border-radius: 999px;
+    margin-bottom: 2rem;
+    background: rgba(0,229,195,.06);
+    animation: fadeDown .6s ease both;
+  }
+  .badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s ease infinite;
+  }
+
+  .hero-name {
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -.03em;
+    animation: fadeUp .7s .1s ease both;
+  }
+  .hero-name .line2 {
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .hero-title {
+    margin-top: 1rem;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 300;
+    color: var(--muted);
+    animation: fadeUp .7s .2s ease both;
+  }
+
+  .hero-desc {
+    margin-top: 1.5rem;
+    max-width: 580px; margin-inline: auto;
+    font-size: .95rem; color: var(--muted);
+    animation: fadeUp .7s .3s ease both;
+  }
+
+  .hero-cta {
+    margin-top: 2.5rem;
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp .7s .4s ease both;
+  }
+
+  /* terminal card */
+  .terminal {
+    margin: 3rem auto 0;
+    max-width: 560px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--glow), 0 24px 60px rgba(0,0,0,.5);
+    animation: fadeUp .7s .5s ease both;
+    text-align: left;
+  }
+  .term-bar {
+    display: flex; align-items: center; gap: .5rem;
+    padding: .7rem 1rem;
+    background: rgba(255,255,255,.04);
+    border-bottom: 1px solid var(--border);
+  }
+  .term-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .term-dot.r { background: #ff5f57; }
+  .term-dot.y { background: #febc2e; }
+  .term-dot.g { background: #28c840; }
+  .term-title { font-family: var(--mono); font-size: .7rem; color: var(--muted); margin-left: auto; }
+  .term-body { padding: 1.2rem 1.4rem; font-family: var(--mono); font-size: .78rem; line-height: 2; }
+  .term-line { display: flex; gap: .6rem; }
+  .term-prompt { color: var(--accent); }
+  .term-cmd { color: var(--text); }
+  .term-out { color: var(--muted); padding-left: 1.2rem; }
+  .cursor {
+    display: inline-block; width: 9px; height: 1.1em;
+    background: var(--accent); vertical-align: middle;
+    animation: blink 1.1s step-end infinite;
+  }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .7rem 1.6rem;
+    border-radius: 8px;
+    font-family: var(--mono); font-size: .8rem; letter-spacing: .05em;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary {
+    background: var(--accent);
+    color: #090c10;
+    box-shadow: 0 0 20px rgba(0,229,195,.35);
+  }
+  .btn-primary:hover { box-shadow: 0 0 32px rgba(0,229,195,.55); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 2rem; position: relative; z-index: 1; }
+  .section-header { text-align: center; margin-bottom: 3.5rem; }
+  .section-tag {
+    font-family: var(--mono); font-size: .72rem;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: .75rem;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 700; letter-spacing: -.02em;
+  }
+  .section-sub { color: var(--muted); font-size: .95rem; margin-top: .5rem; }
+
+  .container { max-width: 1060px; margin-inline: auto; }
+
+  /* ── SOBRE ── */
+  #sobre .sobre-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem; align-items: center;
+  }
+  .sobre-text p { color: var(--muted); margin-bottom: 1rem; font-size: .95rem; }
+  .sobre-text p strong { color: var(--text); font-weight: 600; }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.2rem;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .stat-card:hover { border-color: var(--accent); box-shadow: var(--glow); }
+  .stat-num {
+    font-size: 2.2rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+  .stat-label { font-family: var(--mono); font-size: .7rem; color: var(--muted); margin-top: .4rem; }
+
+  /* ── HABILIDADES ── */
+  #habilidades { background: rgba(13,17,23,.8); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.6rem;
+    transition: border-color .25s, transform .25s, box-shadow .25s;
+    position: relative; overflow: hidden;
+  }
+  .skill-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .3s;
+  }
+  .skill-card:hover { transform: translateY(-4px); border-color: rgba(0,229,195,.3); box-shadow: var(--glow); }
+  .skill-card:hover::before { transform: scaleX(1); }
+  .skill-icon { font-size: 1.8rem; margin-bottom: .8rem; }
+  .skill-name { font-weight: 700; font-size: 1rem; margin-bottom: .4rem; }
+  .skill-desc { font-size: .82rem; color: var(--muted); }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
+  .tag {
+    font-family: var(--mono); font-size: .65rem;
+    padding: .25rem .6rem; border-radius: 4px;
+    background: rgba(0,229,195,.08); color: var(--accent);
+    border: 1px solid rgba(0,229,195,.2);
+  }
+
+  /* ── PROJETOS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.8rem;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: all .3s;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+    box-shadow: var(--glow);
+  }
+  
+  /* CONTAINER DA IMAGEM ATUALIZADO */
+  .project-img-wrapper {
+    width: 100%;
+    height: 180px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.2rem;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.02);
+    position: relative;
+  }
+  .project-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .project-card:hover .project-img-wrapper img {
+    transform: scale(1.05); /* Efeito de zoom na imagem ao passar o mouse */
+  }
+
+  .project-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text); }
+  .project-desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; flex-grow: 1; }
+  .project-links { display: flex; gap: 1rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+  .project-links a {
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .project-links a:hover { color: var(--text); }
+
+  /* ── BARRAS DE PROFICIÊNCIA ── */
+  .proficiency { margin-top: 3rem; }
+  .prof-title { font-weight: 700; margin-bottom: 1.5rem; font-size: 1.1rem; }
+  .prof-item { margin-bottom: 1.2rem; }
+  .prof-label {
+    display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: .75rem;
+    color: var(--muted); margin-bottom: .4rem;
+  }
+  .prof-label span:last-child { color: var(--accent); }
+  .prof-bar {
+    height: 5px; background: var(--border); border-radius: 99px; overflow: hidden;
+  }
+  .prof-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 99px;
+    width: 0;
+    transition: width 1.2s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ── SERVIÇOS ── */
+  #servicos { background: rgba(13,17,23,.8); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+  .service-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem 1.6rem;
+    transition: all .25s;
+    cursor: default;
+  }
+  .service-card:hover { border-color: rgba(0,229,195,.4); transform: translateY(-4px); box-shadow: var(--glow); }
+  .svc-num { font-family: var(--mono); font-size: .7rem; color: var(--accent); margin-bottom: 1rem; }
+  .svc-name { font-weight: 700; font-size: 1.05rem; margin-bottom: .6rem; }
+  .svc-desc { font-size: .83rem; color: var(--muted); }
+
+  /* ── CONTATO ── */
+  #contato { text-align: center; }
+  .contact-box {
+    max-width: 600px; margin-inline: auto;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: calc(var(--radius) * 1.5);
+    padding: 3rem 2.5rem;
+    box-shadow: 0 24px 60px rgba(0,0,0,.4), var(--glow);
+  }
+  .contact-box p { color: var(--muted); margin-bottom: 2rem; font-size: .95rem; }
+  
+  .contact-links { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1rem; 
+  }
+  .contact-link {
+    display: flex; align-items: center; justify-content: flex-start; gap: 1rem;
+    padding: 1rem 1.5rem; border-radius: 8px;
+    background: rgba(255,255,255,.03); border: 1px solid var(--border);
+    text-decoration: none; color: var(--text);
+    font-family: var(--mono); font-size: .85rem;
+    transition: all .2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,195,.06); }
+  .contact-link .icon { font-size: 1.4rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono); font-size: .72rem; color: var(--muted);
+  }
+  footer span { color: var(--accent); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp   { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-12px); } to { opacity:1; transform:none; } }
+  @keyframes blink    { 0%,100% { opacity:1; } 50% { opacity:0; } }
+  @keyframes pulse    { 0%,100% { box-shadow:0 0 0 0 rgba(0,229,195,.5); } 70% { box-shadow:0 0 0 6px rgba(0,229,195,0); } }
+
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    nav { padding: .9rem 1.2rem; }
+    .nav-links { display: none; } 
+    #sobre .sobre-grid { grid-template-columns: 1fr; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+    .contact-box { padding: 2rem 1.4rem; }
+    .hero-cta { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">~/dev <span style="color:var(--text)">Kauã Lucas</span></div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#habilidades">Skills</a></li>
+    <li><a href="#projetos">Projetos</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Disponível para novos projetos
+    </div>
+
+    <h1 class="hero-name">
+      Desenvolvedor<br/>
+      <span class="line2">Front-end</span>
+    </h1>
+
+    <p class="hero-title">JavaScript · HTML5 · CSS3 · Inteligência Artificial</p>
+
+    <p class="hero-desc">
+      Há 2 anos na área transformando ideias em interfaces visuais reconfortantes, aliando código limpo a soluções inovadoras com Inteligência Artificial.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#projetos" class="btn btn-primary">Ver Projetos</a>
+      <a href="#contato" class="btn btn-outline">Entre em Contato</a>
+    </div>
+
+    <div class="terminal">
+      <div class="term-bar">
+        <span class="term-dot r"></span>
+        <span class="term-dot y"></span>
+        <span class="term-dot g"></span>
+        <span class="term-title">zsh — portfolio</span>
+      </div>
+      <div class="term-body">
+        <div class="term-line"><span class="term-prompt">~ $</span><span class="term-cmd"> whoami</span></div>
+        <div class="term-out">Engenheiro de Interfaces / Dev Front-end</div>
+        <div class="term-line"><span class="term-prompt">~ $</span><span class="term-cmd"> ls skills/</span></div>
+        <div class="term-out">javascript  html5  css3  ia  prompt_eng  ui_ux</div>
+        <div class="term-line"><span class="term-prompt">~ $</span><span class="term-cmd"> cat objetivo.txt</span></div>
+        <div class="term-out">Unir lógica pura a um design reconfortante potencializado com IA.</div>
+        <div class="term-line"><span class="term-prompt">~ $</span><span class="term-cmd"> <span class="cursor"></span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-tag">// 01 — sobre</p>
+      <h2 class="section-title">Quem sou eu</h2>
+      <p class="section-sub">Profissional apaixonado por criar experiências visuais incríveis</p>
+    </div>
+    <div class="sobre-grid">
+      <div class="sobre-text reveal">
+        <p>Sou um <strong>Desenvolvedor Front-end</strong> com 2 anos de experiência, especializado em dar vida a designs de forma precisa e otimizada utilizando as tecnologias base da web. Meu foco principal é garantir que a interação do utilizador seja intuitiva, rápida e, acima de tudo, reconfortante.</p>
+        <p>Acredito que o <strong>código perfeito é aquele que ninguém percebe que existe</strong> — o utilizador apenas sente a fluidez da aplicação. Uso HTML, CSS e JavaScript puro para construir as pontes entre a ideia visual e o produto final.</p>
+        <p>Além da programação tradicional, sou experiente na área de <strong>Inteligência Artificial e Prompt Engineering</strong>. Utilizo IA para otimizar o desenvolvimento, gerar lógicas eficientes e implementar novas soluções interativas diretamente na web.</p>
+        <div style="margin-top:1.5rem;">
+          <a href="#contato" class="btn btn-primary" style="font-size:.78rem;">Vamos conversar →</a>
+        </div>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-card">
+          <div class="stat-num">2+</div>
+          <div class="stat-label">ANOS DE EXPERIÊNCIA</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">Front</div>
+          <div class="stat-label">ESPECIALIZAÇÃO PRINCIPAL</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">IA</div>
+          <div class="stat-label">PROMPT ENGINEERING</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">Web</div>
+          <div class="stat-label">AMBIENTE DE DOMÍNIO</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HABILIDADES -->
+<section id="habilidades">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-tag">// 02 — habilidades</p>
+      <h2 class="section-title">Stack & Skills</h2>
+      <p class="section-sub">Ferramentas que domino para construir a web moderna</p>
+    </div>
+
+    <div class="skills-grid">
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">⚡</div>
+        <div class="skill-name">JavaScript (ES6+)</div>
+        <div class="skill-desc">Lógica de interface, manipulação profunda do DOM, consumo de APIs e criação de sistemas interativos sem depender de frameworks pesados.</div>
+        <div class="skill-tags">
+          <span class="tag">Vanilla JS</span><span class="tag">DOM</span><span class="tag">APIs</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-name">HTML5 & CSS3</div>
+        <div class="skill-desc">Estruturação semântica e estilização avançada, garantindo acessibilidade, responsividade e design pixel-perfect através de CSS puro e Grid/Flexbox.</div>
+        <div class="skill-tags">
+          <span class="tag">Responsivo</span><span class="tag">Flexbox/Grid</span><span class="tag">Animações</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">🤖</div>
+        <div class="skill-name">Inteligência Artificial</div>
+        <div class="skill-desc">Integração de modelos de linguagem (LLMs) em aplicações web e utilização de IA como co-piloto para otimização de código e escalabilidade.</div>
+        <div class="skill-tags">
+          <span class="tag">Integração</span><span class="tag">APIs</span><span class="tag">Automação</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-icon">🧠</div>
+        <div class="skill-name">Prompt Engineering</div>
+        <div class="skill-desc">Elaboração de comandos estruturados e contextuais para maximizar a precisão, criatividade e utilidade das respostas geradas por IA.</div>
+        <div class="skill-tags">
+          <span class="tag">Engenharia de Prompts</span><span class="tag">Otimização</span><span class="tag">Lógica</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Proficiency bars -->
+    <div class="proficiency reveal">
+      <p class="prof-title">Nível de Proficiência</p>
+      <div class="prof-item">
+        <div class="prof-label"><span>HTML & CSS</span><span>95%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="95"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-label"><span>Prompt Engineering & IA</span><span>90%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="90"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-label"><span>JavaScript (Vanilla)</span><span>85%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="85"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-label"><span>UI/UX & Design Responsivo</span><span>90%</span></div>
+        <div class="prof-bar"><div class="prof-fill" data-w="90"></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJETOS LANÇADOS -->
+<section id="projetos">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-tag">// 03 — portfólio</p>
+      <h2 class="section-title">Projetos Lançados</h2>
+      <p class="section-sub">Uma seleção do meu trabalho recente</p>
+    </div>
+    
+    <div class="projects-grid">
+      <!-- Projeto 1 -->
+      <div class="project-card reveal">
+        <!-- SUBSTITUA O SRC PELA IMAGEM DO PROJETO 1 -->
+        <div class="project-img-wrapper">
+          <img src="/img/gomes.jpeg" alt="Clínica de Estética">
+        </div>
+        <h3 class="project-title">Landing Page - Clínica de Estética</h3>
+        <p class="project-desc">Site desenvolvido para um espaço de beleza e bem-estar. Design sofisticado com paleta de cores suaves, animações elegantes e integração direta com WhatsApp para facilitar o agendamento de consultas (focado em conversão).</p>
+        <div class="skill-tags" style="margin-bottom: 1rem;">
+          <span class="tag">JavaScript</span><span class="tag">CSS3</span><span class="tag">HTML5</span>
+        </div>
+        <div class="project-links">
+          <a href="https://mikaely-gomes.vercel.app/" target="_blank">Ver ao Vivo ↗</a>
+          <a href="https://github.com/lkaua-dev/estetica" target="_blank">Repositório GitHub ↗</a>
+        </div>
+      </div>
+
+      <!-- Projeto 2 -->
+      <div class="project-card reveal">
+        <!-- SUBSTITUA O SRC PELA IMAGEM DO PROJETO 2 -->
+        <div class="project-img-wrapper">
+          <img src="#" alt="Projeto em Desenvolvimento">
+        </div>
+        <h3 class="project-title">Em Breve</h3>
+        <p class="project-desc">Novo projeto em desenvolvimento. Fique atento para mais detalhes!</p>
+        <div class="skill-tags" style="margin-bottom: 1rem;">
+          <span class="tag">JavaScript</span><span class="tag">APIs de IA</span><span class="tag">CSS3</span>
+        </div>
+        <div class="project-links">
+          <a href="#">Ver ao Vivo ↗</a>
+          <a href="#">Repositório GitHub ↗</a>
+        </div>
+      </div>
+
+      <!-- Projeto 3 -->
+      <div class="project-card reveal">
+        <!-- SUBSTITUA O SRC PELA IMAGEM DO PROJETO 3 -->
+        <div class="project-img-wrapper">
+          <img src="#" alt="Projeto em Desenvolvimento">
+        </div>
+        <h3 class="project-title">Em Breve</h3>
+        <p class="project-desc">Novo projeto em desenvolvimento. Fique atento para mais detalhes!</p>
+        <div class="skill-tags" style="margin-bottom: 1rem;">
+          <span class="tag">HTML5</span><span class="tag">CSS Grid</span><span class="tag">JS</span>
+        </div>
+        <div class="project-links">
+          <a href="#">Ver ao Vivo ↗</a>
+          <a href="#">Repositório GitHub ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-tag">// 04 — serviços</p>
+      <h2 class="section-title">O que eu entrego</h2>
+      <p class="section-sub">Soluções visuais focadas em performance e experiência</p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card reveal">
+        <div class="svc-num">01</div>
+        <div class="svc-name">Desenvolvimento Web Responsivo</div>
+        <div class="svc-desc">Sites construídos com HTML, CSS e JS puros que se adaptam perfeitamente a telemóveis, tablets e desktops, com alta performance.</div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="svc-num">02</div>
+        <div class="svc-name">Integração de Inteligência Artificial</div>
+        <div class="svc-desc">Implementação de funcionalidades baseadas em IA (como chatbots e geradores de conteúdo) direto na sua aplicação web.</div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="svc-num">03</div>
+        <div class="svc-name">Engenharia de Prompts</div>
+        <div class="svc-desc">Criação, refinamento e otimização de prompts para interagir com modelos de linguagem garantindo retornos altamente precisos e úteis.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-tag">// 05 — contato</p>
+      <h2 class="section-title">Vamos transformar a sua ideia?</h2>
+    </div>
+    <div class="contact-box reveal">
+      <p>Estou disponível para novos projetos, parcerias e desafios. Escolha o canal da sua preferência para conversarmos.</p>
+      
+      <!-- Lista de contatos formatada na vertical como no original -->
+      <div class="contact-links">
+        <a href="https://wa.me/5531985812406" target="_blank" class="contact-link">
+          <span class="icon">💬</span>
+          <span>WhatsApp — (31) 98581-2406</span>
+        </a>
+        <a href="https://www.instagram.com/lucas.y7k/" target="_blank" class="contact-link">
+          <span class="icon">📸</span>
+          <span>Instagram — @lucas.y7k</span>
+        </a>
+        <a href="mailto:kaualucass1122@gmail.com" class="contact-link">
+          <span class="icon">✉️</span>
+          <span>E-mail — kaualucass1122@gmail.com</span>
+        </a>
+        <a href="https://github.com/lkaua-dev" target="_blank" class="contact-link">
+          <span class="icon">💻</span>
+          <span>GitHub — /lkaua-dev</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  Desenvolvido com <span>❤️</span> · Stack: HTML · CSS · JavaScript · IA
+</footer>
+
+<script>
+  // Intersection Observer — reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Proficiency bars
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.prof-fill').forEach(fill => {
+          fill.style.width = fill.dataset.w + '%';
+        });
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  const profSection = document.querySelector('.proficiency');
+  if (profSection) barObserver.observe(profSection);
+
+  // Smooth scroll for nav
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
