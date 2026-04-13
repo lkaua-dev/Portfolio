@@ -189,23 +189,37 @@
     .mobile-menu {
       display: none;
       position: fixed;
-      inset: 0;
+      top: 6rem;
+      right: 1.5rem;
+      width: min(320px, 80vw);
+      max-height: calc(100vh - 8rem);
       z-index: 490;
-      background: rgba(8, 8, 8, 0.97);
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      background: rgba(8, 8, 8, 0.96);
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.45);
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2.5rem;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 1.5rem;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-10px) scale(0.98);
+      transition: opacity 0.25s ease, transform 0.25s ease;
     }
 
     .mobile-menu.open {
       display: flex;
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
 
     .mobile-menu a {
       font-family: var(--font-display);
-      font-size: 3rem;
-      letter-spacing: 0.08em;
+      font-size: 1.5rem;
+      line-height: 1.2;
+      letter-spacing: 0.06em;
       color: var(--text);
       text-decoration: none;
       transition: color 0.2s;
@@ -1112,27 +1126,28 @@
           </div>
           <div class="project-arrow">↗</div>
         </a>
+        
+        <a href="https://escola-de-rutes.vercel.app/" target="_blank" class="project-card reveal"
+          style="text-decoration: none; color: inherit; display: block; cursor: pointer;">
+          <div class="project-num">02</div>
+          <div class="project-title">IGREJA — CURSO DE FORMAÇÃO</div>
+          <p class="project-desc">  Landing page desenvolvida para apresentação de um curso da igreja. Design moderno, responsivo e direcionado para contato via WhatsApp.</p>
+          <div class="project-tags">
+            <span class="project-tag">HTML</span>
+            <span class="project-tag">CSS</span>
+            <span class="project-tag">JavaScript</span>
+          </div>
+          <div class="project-arrow">↗</div>
+        </a>
 
-        <div class="project-card reveal reveal-delay-1"
-          style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:220px;background:var(--bg2);">
-          <div
-            style="font-family:var(--font-display);font-size:1rem;letter-spacing:0.14em;color:var(--muted);margin-bottom:0.8rem;">
-            EM DESENVOLVIMENTO</div>
-          <div style="font-size:2.2rem;color:var(--accent);opacity:0.35;">+</div>
-          <div
-            style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted);margin-top:0.6rem;letter-spacing:0.1em;">
-            NOVOS PROJETOS EM BREVE</div>
-        </div>
-
-        <div class="project-card reveal reveal-delay-2"
-          style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:220px;background:var(--bg2);">
-          <div
-            style="font-family:var(--font-display);font-size:1rem;letter-spacing:0.14em;color:var(--muted);margin-bottom:0.8rem;">
-            EM DESENVOLVIMENTO</div>
-          <div style="font-size:2.2rem;color:var(--accent);opacity:0.35;">+</div>
-          <div
-            style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted);margin-top:0.6rem;letter-spacing:0.1em;">
-            NOVOS PROJETOS EM BREVE</div>
+        <div class="project-card project-card-soon reveal reveal-delay-2">
+          <div class="project-num">03</div>
+          <div class="project-title">EM DESENVOLVIMENTO</div>
+          <p class="project-desc">Novos projetos em breve. Acompanhe as atualizações para ver mais trabalhos publicados.</p>
+          <div class="project-tags">
+            <span class="project-tag">Novos</span>
+            <span class="project-tag">Em breve</span>
+          </div>
         </div>
 
       </div>
@@ -1146,7 +1161,6 @@
       <div class="contact-layout">
         <div class="reveal">
           <h2 class="contact-tagline">VAMOS<br><em>TRABALHAR</em><br>JUNTOS?</h2>
-          <a href="mailto:kaualucass1122@gmail.com" class="contact-email">kaualucass1122@gmail.com</a>
         </div>
         <div class="contact-links reveal reveal-delay-2">
 
